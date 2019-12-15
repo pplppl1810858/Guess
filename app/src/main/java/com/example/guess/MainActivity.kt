@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     var s_num3 = 1
     var s_num4 = 1
     var guesscnt = 0
+    var l_i = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +37,17 @@ class MainActivity : AppCompatActivity() {
         s_num1 = Random.nextInt(0,9)
         while (s_num2==s_num1) {
             s_num2 = Random.nextInt(0,9)
-            Log.d("send", "s_num2:$s_num2")
         }
         while ((s_num3==s_num1) or (s_num3==s_num2)) {
             s_num3 = Random.nextInt(0,9)
-            Log.d("send", "s_num3:$s_num3")
         }
         while ((s_num4==s_num1) or (s_num4==s_num2) or (s_num4==s_num3)) {
             s_num4 = Random.nextInt(0,9)
-            Log.d("send", "s_num4:$s_num4")
         }
+        Log.d("send", "s_num1:$s_num1")
+        Log.d("send", "s_num2:$s_num2")
+        Log.d("send", "s_num3:$s_num3")
+        Log.d("send", "s_num4:$s_num4")
     }
 
     inner class FunctionAdapter() : RecyclerView.Adapter<FunctionHolder>(){
@@ -71,6 +73,16 @@ class MainActivity : AppCompatActivity() {
         var resultstext : TextView = view.results
     }
 
+    fun restart(view: View){
+        l_i = 9
+        while (l_i>=0) {
+            results[l_i] = ""
+            values[l_i] = ""
+            l_i = l_i - 1
+        }
+        guesscnt = 0
+        recycler.adapter = FunctionAdapter()
+    }
     fun send(view: View) {
         var l_num1 = num1.text
         var l_num2 = num2.text
@@ -80,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         var l_a = 0
         var l_b = 0
         var l_b_flag = 'N'
-        var l_i = 0
 
         if ((l_num2.toString() == l_num1.toString()) or (l_num3.toString() == l_num1.toString()) or ("$l_num1" == l_num4.toString()) or
             (l_num3.toString() == l_num2.toString()) or (l_num4.toString() == l_num2.toString()) or (l_num4.toString() == l_num3.toString()) ){
@@ -172,16 +183,30 @@ class MainActivity : AppCompatActivity() {
         num2.setText(l_str)
         num3.setText(l_str)
         num4.setText(l_str)
-        l_str = values[0].toString()
+        l_str = ""+s_num1+s_num2+s_num3+s_num4
 
         //重產猜測清單
+        if (l_a == 4) {
+            AlertDialog.Builder(this).setTitle("Message").setMessage("You Win Number is $l_str").setPositiveButton("OK",null).show()
+            l_i = 9
+            while (l_i>=0) {
+                results[l_i] = ""
+                values[l_i] = ""
+                l_i = l_i - 1
+            }
+            guesscnt = 0
+        }
+        if (guesscnt == 10) {
+            AlertDialog.Builder(this).setTitle("Message").setMessage("You Loss Number is $l_str").setPositiveButton("OK",null).show()
+            l_i = 9
+            while (l_i>=0) {
+                results[l_i] = ""
+                values[l_i] = ""
+                l_i = l_i - 1
+            }
+            guesscnt = 0
+        }
         recycler.adapter = FunctionAdapter()
-        if (l_a == 4) {AlertDialog.Builder(this).setTitle("Message").setMessage("You Win Number is $l_str").setPositiveButton("OK",null).show()}
-        if (guesscnt == 10) {AlertDialog.Builder(this).setTitle("Message").setMessage("You Loss Number is $l_str").setPositiveButton("OK",null).show()}
     }
-
-
-
-
 
 }
