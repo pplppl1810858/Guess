@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "399052626964",
+    "firebase_url": "https://guess-9d644.firebaseio.com",
+    "project_id": "guess-9d644",
+    "storage_bucket": "guess-9d644.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399052626964:android:56f3fd2e882060c1ec9b01",
+        "android_client_info": {
+          "package_name": "com.example.guess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399052626964-sjmqc83bj2vqlqa6smdafv4tj4148b6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.guess",
+            "certificate_hash": "e8f808d13efe8c6287a89ad43d0d58c837c7b246"
+          }
+        },
+        {
+          "client_id": "399052626964-mgov43ptaf75euanij8md49eln3dslen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqLP7caTmZ0b1TAkZkn4SQodMKa5MpbRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399052626964-mgov43ptaf75euanij8md49eln3dslen.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
