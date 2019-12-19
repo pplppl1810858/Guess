@@ -1,6 +1,6 @@
 package com.example.guess
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.guess_history.view.*
 import kotlin.random.Random
+
 
 class MainActivity : AppCompatActivity() {
     val values = arrayOfNulls<String>(11)
@@ -96,7 +99,8 @@ class MainActivity : AppCompatActivity() {
         if ((l_num2.toString() == l_num1.toString()) or (l_num3.toString() == l_num1.toString()) or ("$l_num1" == l_num4.toString()) or
             (l_num3.toString() == l_num2.toString()) or (l_num4.toString() == l_num2.toString()) or (l_num4.toString() == l_num3.toString()) ){
             Log.d("send", "ERROR SAME")
-            AlertDialog.Builder(this).setTitle("Notice").setMessage("Can't type same number !").setPositiveButton("OK",null).show()
+            AlertDialog.Builder(this).setTitle("Notice").setMessage("Can't type same number !").
+                setPositiveButton("OK",null).show()
             return
         }
 
@@ -184,10 +188,61 @@ class MainActivity : AppCompatActivity() {
         num3.setText(l_str)
         num4.setText(l_str)
         l_str = ""+s_num1+s_num2+s_num3+s_num4
+        //寫資料庫
+        FirebaseDatabase.getInstance().getReference("1").child("guesscnt").setValue(guesscnt)
+        //FirebaseDatabase.getInstance().getReference("name").child("1").child("Guesscount").
+//        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(object : ValueEventListener{
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                for (i in 1..dataSnapshot.getChildrenCount()) { //place
+//                    Log.d("onDataChange", "dataSnapshot:$dataSnapshot")
+//                    var l_children = dataSnapshot.child(i.toString()).child("guesscnt").value
+//                    Log.d("onDataChange", "dataSnapshot:$l_children")
+//                }
+//            }
+//        })
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//
+//
+//                for (i in 1..dataSnapshot.getChildrenCount()) { //place
+//                    Log.d("onDataChange", "dataSnapshot:$dataSnapshot")
+//                    var l_children = dataSnapshot.child(i.toString()).child("guesscnt")
+//                    Log.d("onDataChange", "dataSnapshot:$l_children")
+////                    for (j in 1..dataSnapshot.child("place").getChildrenCount()) { //base
+////                        for (k in 0..1) {
+////                            val mean: Double =
+////                                (dataSnapshot.child("place$i").child("base$j").child("mean").getValue().toString() + "").toDouble()
+////                            val dev: Double =
+////                                (dataSnapshot.child("place$i").child("base$j").child("dev").getValue().toString() + "").toDouble()
+////                            if (k == 0) {
+////                                arr.get(i - 1).get(k).get(j - 1) = mean
+////                            } else {
+////                                arr.get(i - 1).get(k).get(j - 1) = dev
+////                            }
+////                        }
+////
+////                    }
+////                }
+//                }
+//            }
+//        })
 
         //重產猜測清單
         if (l_a == 4) {
-            AlertDialog.Builder(this).setTitle("Message").setMessage("You Win Number is $l_str").setPositiveButton("OK",null).show()
+
+            AlertDialog.Builder(this).setTitle("Message").setMessage("You Win Number is $l_str").setPositiveButton("OK"
+            ) { dialog, whitch ->
+                val intent = Intent(this,RecordActivity::class.java)
+                intent.putExtra("guesscount",guesscnt)
+                startActivity(intent)
+            }.show()
             l_i = 9
             while (l_i>=0) {
                 results[l_i] = ""

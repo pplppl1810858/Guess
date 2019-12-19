@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8FB396"
+    android:background="@color/design_default_color_primary"
     tools:context=".MainActivity">
 
     <TextView
@@ -139,6 +139,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="restart"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
